@@ -129,7 +129,7 @@ addEventListener('resize', function () {
 });
 
 // Objects
-function Object(x, y, radius, color) {
+function Circle(x, y, radius, color) {
     this.x = x;
     this.y = y;
     this.radius = radius;
@@ -149,9 +149,11 @@ Object.prototype.update = function () {
 };
 
 // Implementation
-var objects = void 0;
+var circle = void 0;
 function init() {
-    objects = [];
+    circle1 = new Circle(300, 300, 100, 'black');
+
+    circle1 = objects = [];
 
     for (var i = 0; i < 400; i++) {
         // objects.push()

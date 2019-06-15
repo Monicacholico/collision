@@ -27,7 +27,7 @@ addEventListener('resize', () => {
 })
 
 // Objects
-function Object(x, y, radius, color) {
+function Circle(x, y, radius, color) {
     this.x = x
     this.y = y
     this.radius = radius
@@ -47,8 +47,11 @@ Object.prototype.update = function() {
 }
 
 // Implementation
-let objects
+let circle;
 function init() {
+    circle1 = new Circle (300, 300, 100, 'black');
+
+    circle1 = 
     objects = []
 
     for (let i = 0; i < 400; i++) {
