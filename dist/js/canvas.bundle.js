@@ -109,8 +109,8 @@ canvas.width = innerWidth;
 canvas.height = innerHeight;
 
 var mouse = {
-    x: innerWidth / 2,
-    y: innerHeight / 2
+    x: 10,
+    y: 10
 };
 
 var colors = ['#2185C5', '#7ECEFD', '#FFF6E5', '#FF7F66'];
@@ -128,36 +128,53 @@ addEventListener('resize', function () {
     init();
 });
 
+//Utility Fucntions
+
+function randomColor(colors) {
+    return colors[Math.floor(Math.random() * colors.length)];
+}
+
+function randomIntFromRange(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+}
+function getDistance(x1, y1, x2, y2) {
+    var xDistance = x2 - x1;
+    var yDistance = y2 - y1;
+    return Math.sqrt(Math.pow(xDistance, 2) + Math.pow(yDistance, 2));
+}
+
 // Objects
 function Circle(x, y, radius, color) {
     this.x = x;
     this.y = y;
     this.radius = radius;
     this.color = color;
+
+    this.update = function () {
+        this.draw();
+    };
+
+    this.draw = function () {
+        c.beginPath();
+        c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+        c.fillStyle = this.color;
+        c.fill();
+        c.closePath();
+    };
 }
 
-Object.prototype.draw = function () {
-    c.beginPath();
-    c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
-    c.fillStyle = this.color;
-    c.fill();
-    c.closePath();
-};
-
-Object.prototype.update = function () {
-    this.draw();
-};
-
 // Implementation
-var circle = void 0;
+var circle1 = void 0;
+var circle2 = void 0;
 function init() {
     circle1 = new Circle(300, 300, 100, 'black');
+    circle2 = new Circle(undefined, undefined, 30, "red");
+    // circle1 = 
+    // objects = []
 
-    circle1 = objects = [];
-
-    for (var i = 0; i < 400; i++) {
-        // objects.push()
-    }
+    // for (let i = 0; i < 400; i++) {
+    //     // objects.push()
+    // }
 }
 
 // Animation Loop
@@ -165,10 +182,21 @@ function animate() {
     requestAnimationFrame(animate);
     c.clearRect(0, 0, canvas.width, canvas.height);
 
-    c.fillText('HTML CANVAS BOILERPLATE', mouse.x, mouse.y);
+    circle1.update();
+    circle2.x = mouse.x;
+    circle2.y = mouse.y;
+    circle2.update();
     // objects.forEach(object => {
     //  object.update()
     // })
+
+    if (getDistance(circle1.x, circle1.y, circle2.x, circle2.y) < circle1.radius + circle2.radius) {
+        circle1.color = 'red';
+    } else {
+        circle1.color = "black";
+    }
+
+    console.log(getDistance(circle1.x, circle1.y, circle2.x, circle2.y));
 }
 
 init();
